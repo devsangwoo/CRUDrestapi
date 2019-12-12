@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
+import { MainContainer } from "./components/main";
+import { GlobalHeader, GlobalNavigation } from "./components/global";
+import {
+  PostsViewContainer,
+  PostViewContainer,
+  PostUpdateContainer
+} from "./components/post";
+import PostCreateContainer from "./components/post/PostCreateContainer";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <GlobalHeader />
+        <GlobalNavigation />
+        <Switch>
+          <Route path="/" exact component={MainContainer} />
+          <Route path="/posts" exact component={PostsViewContainer} />
+          <Route path="/posts/create" exact component={PostCreateContainer} />
+          <Route path="/posts/:postId" exact component={PostViewContainer} />
+          <Route
+            path="/posts/:postId/update"
+            exact
+            component={PostUpdateContainer}
+          />
+
+          <Redirect from="*" to="/" />
+        </Switch>
+      </Router>
+    </>
   );
-}
+};
 
 export default App;
